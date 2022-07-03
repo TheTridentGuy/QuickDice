@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quick Dice</title>
+        <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .spot {
+            margin: .16in;
+            background-color: transparent;
+            border-radius: .2in;
+            height: 20%;
+            width: 20%;
+        }
+        .die {
+            height: 1.2in;
+            width: 1.2in;
+            border-radius: .2in;
+            background-color: white;
+            border: 2px solid transparent;
+        }
+        button {
+            font-size: x-large;
+            width: 100%;
+            height: .5in;
+        }
+        .diediv {
+            width: 100%;
+            align-content: center;
+            align-self: center;
+            padding-left: 32%;
+            padding-right: 25%;
+        }
+        body {
+            font-family: sans-serif;
+        }
+        .coltab {
+            width: 100%;
+        }
+        </style>
+        <script>
+        var spots = ["", "5", "19", "357", "1739", "17539", "147369"];
+        var numdice = 4;
+        var timeout;
+        var spotcolors = [];
+
+
+        function load(){
+            var modal = document.getElementById("diemodal");
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        function getRandRoll(){
+            return Math.floor(Math.random() * 6) + 1
+        }
+
+        function roll(){
+            for(var i=1; i<=numdice; i++){
+                setDie(i, getRandRoll());
+            }
+            timeout = setTimeout("roll()", 50);
+        }
+
+        function setDie(num, value){
+            for(var i=1; i<=9; i++){
+                if(spots[value].includes(i.toString())){
+                    document.getElementById("spot" + num + i).style.backgroundColor = spotcolors[num];
+                }else{
+                    document.getElementById("spot" + num + i).style.backgroundColor = "transparent";
+                }
+            }
+        }
+
+        function makeDice(){
+            reset();
+            numdice = document.getElementById("numofdice").value;
+            for(var i=1; i<=numdice; i++){
+                spotcolor = document.getElementById("spotco" + i).value;
+                spotcolors[i] = spotcolor;
+                bgcolor = document.getElementById("bgco" + i).value;
+                die = document.getElementById("die" + i)
+                die.style.backgroundColor = bgcolor;
+                die.style.border = "2px solid " + spotcolor;
+                for(var j=1; j<=9; j++){
+                    if("1473695".includes(j)){
+                        document.getElementById("spot" + i + j).style.backgroundColor = spotcolor;
+                    }
+                }
+            }
+            document.getElementById("diemodal").style.display = "block";
+        }
+
+        function reset(){
+            const dies = document.getElementsByClassName("die");
+            const spots = document.getElementsByClassName("spot");
+            for(var i=0; i<dies.length; i++){
+                const elem = dies[i];
+                elem.style = "border: 2px solid transparent;";
+                elem.style.backgroundColor = "transparent";
+            }
+            for(var i=0; i<spots.length; i++){
+                const elem = spots[i];
+                elem.style.backgroundColor = "transparent";
+            }
+        }
+        </script>
+    </head>
+    <body>
+        <div id="diemodal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="diediv">
+                    <table>
+                        <tr>
+                            <td>
+                                <table class="die" id="die1">
+                                    <tr>
+                                        <td class="spot" id="spot11"></td>
+                                        <td class="spot" id="spot12"></td>
+                                        <td class="spot" id="spot13"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot14"></td>
+                                        <td class="spot" id="spot15"></td>
+                                        <td class="spot" id="spot16"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot17"></td>
+                                        <td class="spot" id="spot18"></td>
+                                        <td class="spot" id="spot19"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="die" id="die2">
+                                    <tr>
+                                        <td class="spot" id="spot21"></td>
+                                        <td class="spot" id="spot22"></td>
+                                        <td class="spot" id="spot23"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot24"></td>
+                                        <td class="spot" id="spot25"></td>
+                                        <td class="spot" id="spot26"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot27"></td>
+                                        <td class="spot" id="spot28"></td>
+                                        <td class="spot" id="spot29"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="die" id="die3">
+                                    <tr>
+                                        <td class="spot" id="spot31"></td>
+                                        <td class="spot" id="spot32"></td>
+                                        <td class="spot" id="spot33"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot34"></td>
+                                        <td class="spot" id="spot35"></td>
+                                        <td class="spot" id="spot36"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot37"></td>
+                                        <td class="spot" id="spot38"></td>
+                                        <td class="spot" id="spot39"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="die" id="die4">
+                                    <tr>
+                                        <td class="spot" id="spot41"></td>
+                                        <td class="spot" id="spot42"></td>
+                                        <td class="spot" id="spot43"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot44"></td>
+                                        <td class="spot" id="spot45"></td>
+                                        <td class="spot" id="spot46"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="spot" id="spot47"></td>
+                                        <td class="spot" id="spot48"></td>
+                                        <td class="spot" id="spot49"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <button onmousedown="roll();" onmouseup="clearTimeout(timeout);">Let's Roll!</button>
+            </div>
+        </div>
+        <table class="coltab">
+            <tr>
+                <td>Die:</td><td>Spot Color:</td><td>BG Color:</td> 
+            </tr>
+            <tr>
+                <td>Die 1:</td><td><input type="color" id="spotco1"></td><td><input type="color" id="bgco1" value="#ffffff"></td>
+            </tr>
+            <tr>
+                <td>Die 2:</td><td><input type="color" id="spotco2"></td><td><input type="color" id="bgco2" value="#ffffff"></td>
+            </tr>
+            <tr>
+                <td>Die 3:</td><td><input type="color" id="spotco3"></td><td><input type="color" id="bgco3" value="#ffffff"></td>
+            </tr>
+            <tr>
+                <td>Die 4:</td><td><input type="color" id="spotco4"></td><td><input type="color" id="bgco4" value="#ffffff"></td>
+            </tr>
+            <tr>
+                <td>Number of dice:</td><td><input type="number" value="4" min="1" max="4" style="width: 20%;" id="numofdice"></td>
+            </tr>
+        </table>
+        <br>
+        <button onclick="makeDice()">Make Dice</button>
+    </body>
+    <script>
+        load();
+    </script>
+</html>
